@@ -38,24 +38,24 @@ public class ChatEndpoints {
                         saved.getSenderUsername()));
     }
 
-    @GetMapping(path = "/user/{userId}", produces = "application/json")
-    public ResponseEntity<List<ChatMessage>> getAllUserChatMessage(@PathVariable("userId") String userId){
-     return null;
+    @GetMapping(path = "/sender/{senderId}", produces = "application/json")
+    public ResponseEntity<List<ChatMessage>> getAllSenderChatMessage(@PathVariable("senderId") String senderId){
+        return new ResponseEntity<>(chatMessageService.getBySenderId(senderId), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/user/{userId}/pending", produces = "application/json")
-    public ResponseEntity<List<ChatMessage>> getAllUnReceivedUserChatMessage(@PathVariable("userId") String userId){
-        return null;
+    @GetMapping(path = "/sender/{senderId}/pending", produces = "application/json")
+    public ResponseEntity<List<ChatMessage>> getAllUnReceivedUserChatMessage(@PathVariable("senderId") String senderId){
+        return new ResponseEntity<>(chatMessageService.getBySenderIdAndStatus(senderId, MessageStatus.RECEIVED), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<ChatMessage> getChatMessageById(@PathVariable("id") String id ){
-     return null;
+        return new ResponseEntity<>(chatMessageService.getById(id), HttpStatus.OK);
     }
 
     @PutMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<ChatMessage> markChatMessageAsReceived(@PathVariable("id") String id ){
-      return null;
+    public ResponseEntity<ChatMessage> markChatMessageAsDelivered(@PathVariable("id") String id ){
+        return new ResponseEntity<>(chatMessageService.updateAsDelivered(id), HttpStatus.OK);
     }
 
 }
